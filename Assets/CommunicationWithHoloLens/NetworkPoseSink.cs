@@ -43,12 +43,17 @@ public class NetworkPoseSink : MonoBehaviour
     Quaternion rotationLocal;
     Vector3 positionLocal;
 
+    //Vuforia image send coordinates
+    GameObject vuforiaImage;
+
     // Use this for initialization
     void Start()
     {
         //m_MainCamera = Camera.main;
         cam = GameObject.FindWithTag("MainCamera");
         camMain = Camera.main;
+
+        vuforiaImage = GameObject.FindWithTag("vuforiaImage");
 
         myClient = new NetworkClient();
         myClient.RegisterHandler(MsgType.Connect, OnConnected);
@@ -82,7 +87,13 @@ public class NetworkPoseSink : MonoBehaviour
 
         dataString = positionLocal.x.ToString() + " " + positionLocal.y.ToString() + " "
             + positionLocal.z.ToString() + " " + rotationLocal.x.ToString() + " "
-            + rotationLocal.y.ToString() + " " + rotationLocal.z.ToString() + " " + rotationLocal.w.ToString();
+            + rotationLocal.y.ToString() + " " + rotationLocal.z.ToString() + " " + rotationLocal.w.ToString() + " "
+            + vuforiaImage.transform.position.x.ToString() + " " + vuforiaImage.transform.position.y.ToString() + " "
+            + vuforiaImage.transform.position.z.ToString() + " " + vuforiaImage.transform.rotation.x.ToString() + " "
+            + vuforiaImage.transform.rotation.y.ToString() + " " + vuforiaImage.transform.rotation.z.ToString() + " "
+            + vuforiaImage.transform.rotation.w.ToString();
+
+        Debug.Log(dataString);
 
         byte[] data = Encoding.ASCII.GetBytes(dataString);
 

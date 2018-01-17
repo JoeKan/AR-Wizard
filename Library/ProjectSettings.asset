@@ -244,7 +244,9 @@ PlayerSettings:
     m_Enabled: 1
     m_Devices:
     - WindowsMR
-  m_BuildTargetEnableVuforiaSettings: []
+  m_BuildTargetEnableVuforiaSettings:
+  - m_BuildTarget: Metro
+    m_Enabled: 1
   openGLRequireES31: 0
   openGLRequireES31AEP: 0
   m_TemplateCustomTags: {}
@@ -560,7 +562,7 @@ PlayerSettings:
       InternetClient: True
       InternetClientServer: True
       Location: False
-      Microphone: False
+      Microphone: True
       MusicLibrary: False
       Objects3D: False
       PhoneCall: False

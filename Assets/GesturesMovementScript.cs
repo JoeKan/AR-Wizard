@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GesturesMovementScript : MonoBehaviour {
-
+public class GesturesMovementScript : MonoBehaviour
+{
     public GameObject objectToMove;
     public GameObject projectileOriginal;
     public GameObject enemy;
@@ -18,9 +18,8 @@ public class GesturesMovementScript : MonoBehaviour {
     float startPositionX, oldPositionX;
 
     //shooting the projectile
-    public bool shooting = false;
-    float startingPointTimer;
-    public float timer;
+    bool shooting = false;
+    float startingPointTimer, timer;
     bool snapshot = false;
     float projectilePositionX, projectilePositionY, projectilePositionZ, deltaScaling;
 
@@ -44,6 +43,7 @@ public class GesturesMovementScript : MonoBehaviour {
 
         //enemy initialize base stats
         hitCounter = 0;
+        
     }
 	
 	// Update is called once per frame
@@ -56,7 +56,7 @@ public class GesturesMovementScript : MonoBehaviour {
 
         //update game object position via movement of mouse cursor and z
         objectToMove.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, zPositionKeyboard));
-
+        
         //check for gestures
         if (startGesture)
         {
@@ -64,18 +64,18 @@ public class GesturesMovementScript : MonoBehaviour {
             startGesture = false;
         }
         //gesture only recognized as attempt if left mouse button is pressed
-        else if (Input.GetMouseButton(0))
+        else //if (Input.GetMouseButton(0))
             CheckGesture(objectToMove.transform.position.x);
-        else
+        /*else
         {
             startPositionX = objectToMove.transform.position.x;
-        }
+        }*/
 
         //if we did a gesture successfully, we shoot a one time projectile in z direction, starting from the game object
         if (shooting)
         {
             //take a snapshot of the initial position of the gameObject
-            if (snapshot)
+            if (snapshot && GameObject.FindGameObjectsWithTag("bullet").Length < 2)
             {
                 snapshot = false;
                 //getPosition of Child object of objectToMove
@@ -84,7 +84,8 @@ public class GesturesMovementScript : MonoBehaviour {
                 projectilePositionX = childObj.transform.position.x;
                 projectilePositionY = childObj.transform.position.y;
                 projectilePositionZ = childObj.transform.position.z;
-                
+
+                Debug.Log(GameObject.FindGameObjectsWithTag("bullet").Length);
                 //initialize
                 projectile = Instantiate(projectileOriginal);
                 projectile.transform.position = new Vector3(projectilePositionX, projectilePositionY,
@@ -93,14 +94,14 @@ public class GesturesMovementScript : MonoBehaviour {
                 projectile.transform.rotation = Quaternion.LookRotation(enemy.transform.position);
             }
 
-            if (enemy != null)
+            if (GameObject.FindGameObjectsWithTag("bullet").Length <= 2)
             {
-                Debug.Log("enemy is alive ");
                 //move projectile continuously back
                 projectile.transform.LookAt(enemy.transform);
                 projectile.transform.position += projectile.transform.TransformDirection(transform.forward)
-                     * 8.0f * Time.deltaTime;
+                    * 8.0f * Time.deltaTime;
             }
+            
 
             //we want to stop if the projectile hits something (is done in separate script) or after 10 seconds
             timer += Time.deltaTime;
@@ -125,8 +126,8 @@ public class GesturesMovementScript : MonoBehaviour {
         //if we continuously moved to the left
         else
         {
-            //if we moved more than 0.5f to the left: gesture successful
-            if (continousX - startPositionX <= -5.0f)
+            //if we moved more than 2.0f to the left: gesture successful
+            if (continousX - startPositionX <= -2.0f)
             {
                 startGesture = true;
                 oldPositionX = continousX;
@@ -141,21 +142,11 @@ public class GesturesMovementScript : MonoBehaviour {
             }
         }
     }
-
-    private void OnTriggerEnter(Collider other)
+    
+    public void DestroyProjectile()
     {
-       // scriptReference.shooting = false;
-        Destroy(other.gameObject);
-       /// scriptReference.timer = 0;
-        hitCounter++;
-        Debug.Log("HitCounter: " + hitCounter);
-         if (hitCounter >= 5)
-         {
-             Debug.Log("WIN");
-             Destroy(enemy);
-            Destroy(projectile);
-         }
+        shooting = false;
+        timer = 0;
+        Destroy(projectile, 1.0f);
     }
-
 }
-

@@ -12,7 +12,6 @@ public class NetworkPoseSource : MonoBehaviour {
     float[] wandCoords;
     const short recieveMsg = 111;
     Vector3 wandPosition;
-    //Quaternion wandRotation;
     Quaternion wandRotation;
 
     // Use this for initialization
@@ -32,7 +31,6 @@ public class NetworkPoseSource : MonoBehaviour {
     {
         NetworkServer.Listen(41844);
         NetworkServer.RegisterHandler(recieveMsg, ReceivedMessage);
-       // isAtStartup = false;
     }
 
     public void ReceivedMessage(NetworkMessage netMsg)
@@ -41,7 +39,7 @@ public class NetworkPoseSource : MonoBehaviour {
         Debug.Log("Receiving data...");
         wandCoordString = (rcvString.value).Split(' ');
 
-        for (int i = 0; i < wandCoordString.Length; i++) {
+        for (int i = 0; i < wandCoords.Length; i++) {
             wandCoords[i] = Single.Parse(wandCoordString[i]);
             Debug.Log("WandCoords: " + wandCoords[i] + " " + wandCoords[i].GetType());
         }

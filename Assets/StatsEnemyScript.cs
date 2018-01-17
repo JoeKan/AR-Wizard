@@ -17,15 +17,14 @@ public class StatsEnemyScript : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        scriptReference.shooting = false;
-        Destroy(other.gameObject);
-        scriptReference.timer = 0;
+        scriptReference.DestroyProjectile();
+        
         hitCountEnemy++;
         Debug.Log("HitCounter: " + hitCountEnemy);
-       /* if (hitCountEnemy >= 5)
+        if (hitCountEnemy >= 5)
         {
             Debug.Log("WIN");
-            Destroy(this.gameObject);
-        }*/
+            this.gameObject.SetActive(false);
+        }
     }
 }
