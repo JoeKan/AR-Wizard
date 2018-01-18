@@ -88,12 +88,10 @@ public class NetworkPoseSink : MonoBehaviour
         dataString = positionLocal.x.ToString() + " " + positionLocal.y.ToString() + " "
             + positionLocal.z.ToString() + " " + rotationLocal.x.ToString() + " "
             + rotationLocal.y.ToString() + " " + rotationLocal.z.ToString() + " " + rotationLocal.w.ToString() + " "
-            + vuforiaImage.transform.position.x.ToString() + " " + vuforiaImage.transform.position.y.ToString() + " "
-            + vuforiaImage.transform.position.z.ToString() + " " + vuforiaImage.transform.rotation.x.ToString() + " "
-            + vuforiaImage.transform.rotation.y.ToString() + " " + vuforiaImage.transform.rotation.z.ToString() + " "
-            + vuforiaImage.transform.rotation.w.ToString();
-
-        Debug.Log(dataString);
+            + vuforiaImage.transform.localPosition.x.ToString() + " " + vuforiaImage.transform.localPosition.y.ToString() + " "
+            + vuforiaImage.transform.localPosition.z.ToString() + " " + vuforiaImage.transform.localRotation.x.ToString() + " "
+            + vuforiaImage.transform.localRotation.y.ToString() + " " + vuforiaImage.transform.localRotation.z.ToString() + " "
+            + vuforiaImage.transform.localRotation.w.ToString();
 
         byte[] data = Encoding.ASCII.GetBytes(dataString);
 
@@ -114,13 +112,6 @@ public class NetworkPoseSink : MonoBehaviour
         try
         {
             myClient.Send(sendMsgID, new StringMessage(dataString));
-            Debug.Log("Cam Position: " + dataString + "\n"
-                + "LeftEye: " + leftWorld.ToString() + " - " + InputTracking.GetLocalRotation(XRNode.LeftEye) + "\n"
-                + "LeftEyeLoc: " + InputTracking.GetLocalPosition(XRNode.LeftEye) + "\n"
-                + "RightEye: " + rightWorld.ToString() + " - " + InputTracking.GetLocalRotation(XRNode.RightEye) + "\n"
-                + "RightEyeLoc: " + InputTracking.GetLocalPosition(XRNode.RightEye) + "\n"
-                + "CenterEye: " + center.ToString() + " - " + InputTracking.GetLocalRotation(XRNode.CenterEye) + "\n"
-                + "Head: " + head.ToString() + " - " + InputTracking.GetLocalRotation(XRNode.Head));
         }
         catch (Exception e)
         {
