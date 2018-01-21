@@ -9,6 +9,9 @@ using System.IO;
 
 using UnityEngine.XR.WSA.Input;
 using UnityEngine.XR;
+using UnityEngine.Windows.Speech;
+using System.Linq;
+using System.Collections.Generic;
 
 public class RegisterHostMessage : MessageBase
 {
@@ -22,6 +25,10 @@ public class NetworkPoseSink : MonoBehaviour
     private string id = "holoPose";
 
     static readonly DateTime StartOfEpoch = new DateTime(1970, 1, 1);
+
+    KeywordRecognizer keywordRecognizer;
+    Dictionary<string, System.Action> keywords = new Dictionary<string, System.Action>();
+    float calibrate = 0.0f;
 
     NetworkClient myClient;
     // RegisterHostMessage msg = new RegisterHostMessage();
@@ -60,6 +67,28 @@ public class NetworkPoseSink : MonoBehaviour
         myClient.RegisterHandler(MsgType.Disconnect, OnDisconnected);
        // InvokeRepeating("SetupClient", 2.0f, 5.0f);
         SetupClient();
+
+        //Create keywords for keyword recognizer
+        keywords.Add("Calibrate", () =>
+        {
+            // action to be performed when this keyword is spoken
+            calibrate = 666.666f;
+        });
+
+        keywordRecognizer = new KeywordRecognizer(keywords.Keys.ToArray());
+        keywordRecognizer.OnPhraseRecognized += KeywordRecognizer_OnPhraseRecognized;
+        keywordRecognizer.Start();
+    }
+
+    private void KeywordRecognizer_OnPhraseRecognized(PhraseRecognizedEventArgs args)
+    {
+        System.Action keywordAction;
+        // if the keyword recognized is in our dictionary, call that Action.
+        if (keywords.TryGetValue(args.text, out keywordAction))
+        {
+            keywordAction.Invoke();
+            Debug.Log("Voice command activatedd");
+        }
     }
 
     // Update is called once per frame
@@ -91,7 +120,7 @@ public class NetworkPoseSink : MonoBehaviour
             + vuforiaImage.transform.localPosition.x.ToString() + " " + vuforiaImage.transform.localPosition.y.ToString() + " "
             + vuforiaImage.transform.localPosition.z.ToString() + " " + vuforiaImage.transform.localRotation.x.ToString() + " "
             + vuforiaImage.transform.localRotation.y.ToString() + " " + vuforiaImage.transform.localRotation.z.ToString() + " "
-            + vuforiaImage.transform.localRotation.w.ToString();
+            + vuforiaImage.transform.localRotation.w.ToString() + " " + calibrate;
 
         byte[] data = Encoding.ASCII.GetBytes(dataString);
 

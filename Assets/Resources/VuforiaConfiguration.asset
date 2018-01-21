@@ -26,7 +26,7 @@ MonoBehaviour:
     distortionRenderingLayer: 31
     eyewearType: 1
     stereoFramework: 0
-    seeThroughConfiguration: 1
+    seeThroughConfiguration: 0
     viewerName: 
     viewerManufacturer: 
     useCustomViewer: 0
@@ -60,8 +60,8 @@ MonoBehaviour:
     autoInitBuilder: 0
     sceneUnitsToMillimeter: 0
   deviceTracker:
-    autoInitTracker: 1
-    autoStartTracker: 1
+    autoInitTracker: 0
+    autoStartTracker: 0
     trackingMode: 1
     posePrediction: 0
     modelCorrectionMode: 0

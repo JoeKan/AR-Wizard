@@ -484,7 +484,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 201401521
+  randomSeed: 760174522
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4323,7 +4323,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 85980462
+  randomSeed: -1464004850
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -7814,7 +7814,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &712517499
 Transform:
   m_ObjectHideFlags: 0
@@ -7897,12 +7897,12 @@ GameObject:
   - component: {fileID: 799188187}
   - component: {fileID: 799188186}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Wand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &799188186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7934,6 +7934,17 @@ Transform:
 GameObject:
   m_PrefabParentObject: {fileID: 160236, guid: f05ca6457085e0f428373f98413918ea, type: 2}
   m_PrefabInternal: {fileID: 1693966975}
+--- !u!114 &861753591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 861753590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43dea14ab706e05499a9388044010f9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &861753593 stripped
 Transform:
   m_PrefabParentObject: {fileID: 464630, guid: f05ca6457085e0f428373f98413918ea, type: 2}
@@ -8020,7 +8031,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1364749813
 Transform:
   m_ObjectHideFlags: 0
@@ -8254,7 +8265,7 @@ MonoBehaviour:
   m_Script: {fileID: -1826476478, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mWorldCenterMode: 2
+  mWorldCenterMode: 1
   mWorldCenter: {fileID: 0}
 --- !u!81 &1441007332
 AudioListener:
